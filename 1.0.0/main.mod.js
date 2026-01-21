@@ -2,7 +2,7 @@ import { PolyMod } from "https://pml.orangy.cfd/PolyTrackMods/PolyModLoader/0.5.
 
 globalThis.cinemaEnabled = false;
 
-const DEFAULT_RATIO = 2.3; 
+const DEFAULT_RATIO = 1; 
 const CINEMA_STATE_KEY = "__polyCinemaState";
 
 function getGL() {
@@ -16,21 +16,22 @@ function computeContentHeight(ratio) {
   return Math.min(h, wanted);
 }
 
-/*
+//lowk dont know what im doing with this lmao
+
 function computeContentWidth(ratio) {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const wanted = Math.round(h * ratio);
+  const wanted = Math.round(h + ratio);
   return Math.min(w, wanted);
 }
-*/
+
 
 function applyCanvasLetterbox(gl, ratio) {
   if (!gl || !gl.canvas) return false;
 
   const canvas = gl.canvas;
   const contentH = computeContentHeight(ratio);
-  //const contentW = computeContentWidth(ratio);
+  const contentW = computeContentWidth(ratio);
 
   Object.assign(canvas.style, {
     position: "fixed",
@@ -38,14 +39,14 @@ function applyCanvasLetterbox(gl, ratio) {
     top: "50%",
     transform: "translateY(-50%)",
     //width: `${contentW}px`,
-    width: "100%",
+    width: "50%",
     height: `${contentH}px`,
     display: "block",
     zIndex: "0",
   });
 
   const dpr = window.devicePixelRatio || 1;
-  const bufferW = Math.max(1, Math.floor(window.innerWidth * dpr));
+  const bufferW = Math.max(1, Math.floor(contentW * dpr));
   const bufferH = Math.max(1, Math.floor(contentH * dpr));
 
   if (canvas.width !== bufferW || canvas.height !== bufferH) {

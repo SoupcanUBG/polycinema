@@ -1,4 +1,6 @@
 import { PolyMod } from "https://pml.orangy.cfd/PolyTrackMods/PolyModLoader/0.5.2/PolyModLoader.js";
+import { SettingType} from "https://pml.orangy.cfd/PolyTrackMods/PolyModLoader/0.5.2/PolyModLoader.js";
+
 
 globalThis.cinemaEnabled = true;
 
@@ -9,12 +11,13 @@ const PRESETS = [
   { name: "Off", aspect: null }, // means: use full screen
   { name: "1:1", aspect: 1 / 1 },
   { name: "16:9", aspect: 16 / 9 },
+  { name: "4:3", aspect: 4 / 3},
 ];
 
 // Start preset (index into PRESETS)
 let currentPreset = 0;
 
-let toggledPreset = 0;
+let toggledPreset = 3;
 
 function realScreenW() {
   return document.documentElement.clientWidth;
@@ -401,6 +404,15 @@ globalThis.__polyCinemaNextPreset = function () {
 globalThis.__polyCinemaPrevPreset = function () {
   globalThis.__polyCinemaSetPreset(currentPreset - 1);
 };
+
+
+//add settings
+pml.registerSettingCategory("PolyCinema settings");
+pml.registerSetting("Aspect ratio", "ratio", SettingType.CUSTOM, );
+
+
+
+
 
 class cinema extends PolyMod {
   init = (pml) => {

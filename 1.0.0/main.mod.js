@@ -10,9 +10,11 @@ const CINEMA_STATE_KEY = "__polyCinemaState";
 const PRESETS = [
   { name: "Off", aspect: null }, // means: use full screen
   { name: "1:1", aspect: 1 / 1 },
-  { name: "16:9", aspect: 16 / 9 },
   { name: "4:3", aspect: 4 / 3},
-  { name: "2.39:1", aspect: 2.39 }
+  { name: "3:2", aspect: 3 / 2 },
+  { name: "18:9", aspect: 18 / 9 },
+  { name: "2.39:1", aspect: 2.39 },
+  { name: "16:9", aspect: 16 / 9 }
 ];
 
 // Start preset (index into PRESETS)
@@ -114,7 +116,7 @@ function realScreenH() {
     "innerHeight",
   )?.get;
 
-  // fallback in case descriptors are missing
+  // Fallback in case descriptors are missing
   const realInnerWidth = () => document.documentElement.clientWidth;
   const realInnerHeight = () => document.documentElement.clientHeight;
 
@@ -368,7 +370,7 @@ function tickEnforce() {
     }
   }
 
-  //getting settings value and updating preset
+  // Getting settings value and updating preset
   let rawSettings = JSON.parse(window.localStorage.getItem("polytrack_v4_prod_settings"));
 
   toggledPreset = parseInt(rawSettings[3][1],10);
@@ -420,8 +422,8 @@ class cinema extends PolyMod {
     pml.registerKeybind(
       "Toggle Cinema",
       "toggle_cinema",
-      "keydown",
-      "KeyC",
+      "keydown", 
+      "KeyE",
       null,
       () => {
         if (currentPreset !== 0) {
@@ -434,7 +436,7 @@ class cinema extends PolyMod {
       },
     );
 
-    /* haha no cool in game switcher you MUST use the fancy settings i created
+    /* haha no cool in game switcher you MUST use the fancy settings i created !!
     pml.registerKeybind(
       "Next Cinema Preset",
       "next_cinema_preset",
@@ -450,16 +452,17 @@ class cinema extends PolyMod {
 
     this.pml = pml
 
-    //add settings options
+    // Add settings options
     pml.registerSettingCategory("PolyCinema settings");
     pml.registerSetting("Aspect ratio", "ratio", SettingType.CUSTOM, "1", [
       { title: "1:1", value: "1" },
-      { title: "16:9", value: "2" },
-      { title: "4:3", value: "3" },
-      { title: "2.39:1", value: "4" }
+      { title: "4:3", value: "2" },
+      { title: "3:2", value: "3" },
+      { title: "18:9", value: "4" },
+      { title: "2.39:1", value: "5" },
+      { title: "16:9", value: "6" }
     ]);
   };
-
 }
 
 export let polyMod = new cinema();
